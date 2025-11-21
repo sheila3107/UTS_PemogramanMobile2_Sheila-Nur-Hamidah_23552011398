@@ -4,7 +4,7 @@ class ProductModel {
   final int price;
   final String image;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.name,
     required this.price,
@@ -22,20 +22,10 @@ class ProductModel {
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      price: map['price'] as int,
-      image: map['image'] as String,
+      id: map['id'],
+      name: map['name'],
+      price: map['price'],
+      image: map['image'],
     );
   }
-
-  @override
-  // Wajib untuk Cubit agar objek produk dengan ID yang sama diperlakukan sama
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is ProductModel && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
 }

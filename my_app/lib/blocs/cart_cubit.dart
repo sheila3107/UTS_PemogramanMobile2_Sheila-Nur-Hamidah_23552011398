@@ -1,63 +1,47 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:collection';
-import '../models/product_model.dart'; 
+import '../models/product_model.dart';
 
-// State keranjang: Map<Produk, Kuantitas>
-typedef CartState = LinkedHashMap<ProductModel, int>;
+class CartItem {
+  ProductModel product;
+  int quantity;
 
-class CartCubit extends Cubit<CartState> {
-  CartCubit() : super(LinkedHashMap());
+  CartItem({required this.product, this.quantity = 1});
+}
+
+class CartCubit extends Cubit<List<CartItem>> {
+  CartCubit() : super([]);
 
   void addToCart(ProductModel product) {
-    final currentCart = LinkedHashMap<ProductModel, int>.from(state);
-    if (currentCart.containsKey(product)) {
-      currentCart[product] = currentCart[product]! + 1;
+    final index = state.indexWhere((item) => item.product.id == product.id);
+    if (index != -1) {
+      updateQuantity(product, state[index].quantity + 1);
     } else {
-      currentCart[product] = 1;
+      emit([...state, CartItem(product: product)]);
     }
-    emit(currentCart); 
   }
 
   void removeFromCart(ProductModel product) {
-    final currentCart = LinkedHashMap<ProductModel, int>.from(state);
-    if (!currentCart.containsKey(product)) return;
-    if (currentCart[product]! > 1) {
-      currentCart[product] = currentCart[product]! - 1;
-    } else {
-      currentCart.remove(product);
-    }
-    emit(currentCart);
+    emit(state.where((item) => item.product.id != product.id).toList());
   }
 
   void updateQuantity(ProductModel product, int qty) {
-    if (qty < 0) return;
-    final currentCart = LinkedHashMap<ProductModel, int>.from(state);
-    if (currentCart.containsKey(product)) {
-      if (qty == 0) {
-        currentCart.remove(product);
-      } else {
-        currentCart[product] = qty;
-      }
-      emit(currentCart);
+    if (qty <= 0) {
+      removeFromCart(product);
+      return;
     }
+    final newList = state.map((item) {
+      if (item.product.id == product.id) {
+        return CartItem(product: item.product, quantity: qty);
+      }
+      return item;
+    }).toList();
+    emit(newList);
   }
 
   void clearCart() {
-    // Mengosongkan keranjang (dipanggil saat Checkout)
-    emit(LinkedHashMap()); 
+    emit([]);
   }
 
-  int getTotalItems() {
-    // Menghitung jumlah produk unik
-    return state.length; 
-  }
-  
-  int getTotalPrice() {
-    // Menghitung total harga
-    int total = 0;
-    state.forEach((product, quantity) {
-      total += product.price * quantity;
-    });
-    return total;
-  }
+  int get totalItems => state.fold(0, (sum, item) => sum + item.quantity);
+  int get totalPrice => state.fold(0, (sum, item) => sum + item.product.price * item.quantity);
 }
