@@ -1,27 +1,26 @@
-Nama: Sheila Nur Hamidah
-NIM: 23552011398
-Kelas: TIF RP 23 CNS A
+**Nama**  : Sheila Nur Hamidah  
+**NIM**   : 23552011398  
+**Kelas** : TIF RP 23 CNS A  
+
 # 📝 Perbedaan Cubit dan Bloc, Alasan Pemisahan Arsitektur, dan Contoh State pada CartCubit
 
-## **1. Perbedaan Cubit dan Bloc dalam Arsitektur Flutter**
+## 1. Perbedaan Cubit dan Bloc dalam Arsitektur Flutter
 
-### **Cubit**
+### Cubit
+- State management yang lebih sederhana.  
+- Tidak menggunakan event.  
+- Perubahan state dilakukan langsung melalui method di dalam Cubit.  
+- Cocok untuk logika sederhana hingga menengah.  
+- Alur kerja: **method → emit(state)**  
 
-* State management yang lebih sederhana.
-* Tidak menggunakan event.
-* Perubahan state dilakukan langsung melalui method di dalam Cubit.
-* Cocok untuk logika sederhana hingga menengah.
-* Alur kerja: **method → emit(state)**
+### Bloc
+- Lebih kompleks dan terstruktur.  
+- Menggunakan event dan state.  
+- Setiap perubahan state dipicu oleh event.  
+- Cocok untuk aplikasi besar dan logika yang rumit.  
+- Alur kerja: **event → mapEventToState → emit(state)**  
 
-### **Bloc**
-
-* Lebih kompleks dan terstruktur.
-* Menggunakan event dan state.
-* Setiap perubahan state dipicu oleh event.
-* Cocok untuk aplikasi besar dan logika yang rumit.
-* Alur kerja: **event → mapEventToState → emit(state)**
-
-### **Kesimpulan Perbandingan**
+### Tabel Perbandingan
 
 | Cubit                   | Bloc                          |
 | ----------------------- | ----------------------------- |
@@ -32,45 +31,43 @@ Kelas: TIF RP 23 CNS A
 
 ---
 
-## **2. Mengapa penting memisahkan Model Data, Logika Bisnis, dan UI dalam Flutter**
+## 2. Mengapa Penting Memisahkan Model Data, Logika Bisnis, dan UI
 
-* Struktur kode lebih rapi dan mudah dipahami.
-* Mudah melakukan maintenance ketika aplikasi berkembang.
-* UI tetap bersih tanpa bercampur logika bisnis.
-* Mempermudah proses testing terhadap data dan logika.
-* Komponen dapat digunakan kembali (reusable).
-* Mengurangi potensi bug.
-* Aplikasi lebih mudah dikembangkan secara bertahap.
-* Developer bisa fokus pada peran masing-masing (UI vs logic).
-* Perubahan model tidak mempengaruhi UI secara langsung.
-* Mengikuti pola arsitektur modern yang standar.
+- Kode lebih rapi dan mudah dipahami.  
+- Maintenance lebih mudah saat aplikasi berkembang.  
+- UI bersih tanpa logika bisnis.  
+- Mempermudah proses testing.  
+- Komponen bisa digunakan kembali (reusable).  
+- Mengurangi potensi bug.  
+- Aplikasi lebih scalable.  
+- Developer dapat fokus pada bagiannya masing-masing.  
+- Perubahan model tidak mengganggu UI langsung.  
+- Mengikuti standar arsitektur modern.  
 
 ---
 
-## **3. Contoh State yang Digunakan dalam `CartCubit` dan Fungsinya**
+## 3. Contoh State yang Digunakan dalam CartCubit
 
-### **1. CartInitial**
+### 1. CartInitial
+- State awal saat keranjang kosong atau belum dimuat.  
+- Untuk menampilkan state awal (empty cart / loading).  
 
-* State awal saat keranjang masih kosong atau belum dimuat.
-* Biasanya digunakan untuk menampilkan tampilan empty cart atau loading awal.
+### 2. CartLoaded
+- State ketika data keranjang berhasil dimuat.  
+- Berisi list item, total harga, dan jumlah item.  
 
-### **2. CartLoaded**
+### 3. CartUpdated
+- State saat ada perubahan pada keranjang:  
+  - Menambah item  
+  - Menghapus item  
+  - Mengubah quantity  
+- Memberi tahu UI agar diperbarui.  
 
-* State ketika data keranjang berhasil dimuat.
-* Berisi data seperti list item, total harga, dan jumlah item.
+### State Tambahan Opsional
+- **CartLoading** → digunakan saat proses update atau fetching data.  
+- **CartError** → jika terjadi error saat memproses keranjang.  
 
-### **3. CartUpdated**
+---
 
-* State yang muncul ketika ada perubahan pada keranjang:
-
-  * Menambah item
-  * Menghapus item
-  * Mengubah quantity
-* Memberi tahu UI bahwa keranjang perlu diperbarui.
-
-### **State Opsional Tambahan**
-
-* **CartLoading** → digunakan saat memproses perubahan atau mengambil data.
-* **CartError** → digunakan ketika terjadi error, misalnya gagal menambah item atau gagal memuat data.
-  
-Berikut Link Video Youtube: https://youtu.be/f9GGarzqpLk
+## Link Video YouTube
+https://youtu.be/f9GGarzqpLk
