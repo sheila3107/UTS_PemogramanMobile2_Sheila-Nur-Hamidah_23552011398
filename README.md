@@ -1,7 +1,6 @@
-Siap, aku buatin ulang versi README tanpa tulisan “10 poin” di dalamnya. Tinggal copas 👇
-
----
-
+Nama: Sheila Nur Hamidah
+NIM: 23552011398
+Kelas: TIF RP 23 CNS A
 # 📝 Perbedaan Cubit dan Bloc, Alasan Pemisahan Arsitektur, dan Contoh State pada CartCubit
 
 ## **1. Perbedaan Cubit dan Bloc dalam Arsitektur Flutter**
@@ -73,3 +72,5 @@ Siap, aku buatin ulang versi README tanpa tulisan “10 poin” di dalamnya. Tin
 
 * **CartLoading** → digunakan saat memproses perubahan atau mengambil data.
 * **CartError** → digunakan ketika terjadi error, misalnya gagal menambah item atau gagal memuat data.
+  
+Berikut Link Video Youtube: https://youtu.be/f9GGarzqpLk
